@@ -9,15 +9,15 @@ app.get('/', function(req, res) {
   
     res.set("Content-Type", "text/html");
 
-    var foo = function() {
+    function foo(){
         document.getElementById("audioPlayer").src = "cancel.mp3";
-    };
+    }
     
-    var foo2 = function() {
+    function foo1(){
         document.getElementById("videoPlayer").src = "cancel.mp4";
-    };
+    }
     
-    var fns = {foo : foo, foo2: foo2}
+   
 
 
     if (!videoFile && !audioFile && !posterImage) {
@@ -28,16 +28,18 @@ app.get('/', function(req, res) {
         res.write("<video id='videoPlayer' controls>");
         res.write("source src='" + videoFile +"' />");
         res.write("</video>");
-        //buttons
-        res.write("<button id='videoCancel' onclick='fns.foo()'>Click me</button>");
+        //button
+        res.write("<script>function foo(){ document.getElementById('videoPlayer').src = 'cancel.mp4';}</script>");
+        res.write("<button id='videoCancel' onclick='foo1()'>Click me</button>");
         
     } 
     if(audioFile){
         res.write("'<audio id='audioPlayer' controls>");
         res.write("<source src='" + audioFile+"' />");
         res.write("</audio>");
-        //buttons
-        res.write("<button id='audioCancel' onclick='fns.foo2()'>Click me</button>");
+        //button
+        res.write("<script>function foo(){ document.getElementById('audioPlayer').src = 'cancel.mp3';}</script>");
+        res.write("<button id='audioCancel' onclick='foo()'>Click me</button>");
     }
     if(posterImage){
         res.write("<img src='" + posterImage +"' id='posterImage'>");
