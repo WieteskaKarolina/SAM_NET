@@ -8,25 +8,23 @@ app.get('/', function(req, res) {
     const posterImage = req.query.imgFile;
   
     res.set("Content-Type", "text/html");
-    
+
     if (!videoFile && !audioFile && !posterImage) {
-      res.send('Please provide a video or audio file.');
+        res.send("Please provide a video or audio file.");
     } 
     
     if(videoFile){
-    res.send(`<video id="videoPlayer" controls>
-                <source src="${videoFile}" type="video/mp4">
-                Your browser does not support the video tag.
-                </video>`);
+        res.write("<video id='videoPlayer' controls>");
+        res.write("source src='" + videoFile +"' />");
+        res.write("</video>");
     } 
     if(audioFile){
-    res.send(`<audio id="audioPlayer" controls>
-                <source src="${audioFile}" type="audio/mpeg">
-                Your browser does not support the audio tag.
-                </audio>`);
+        res.write("'<audio id='audioPlayer' controls>");
+        res.write("<source src='" + audioFile+"' />");
+        res.write("</audio>");
     }
     if(posterImage){
-        res.send(`<img src="${posterImage}" id="posterImage">`);
+        res.write("<img src='" + posterImage +"' id='posterImage'>");
     }
     
   });
