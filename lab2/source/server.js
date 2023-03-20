@@ -5,8 +5,9 @@ const app = express()
 app.get('/', function(req, res) {
     const videoFile = req.query.videoFile;
     const audioFile = req.query.audioFile;
+    const posterImage = req.query.imgFile;
   
-    if (!videoFile && !audioFile) {
+    if (!videoFile && !audioFile && !posterImage) {
       res.send('Please provide a video or audio file.');
     } 
     else {
