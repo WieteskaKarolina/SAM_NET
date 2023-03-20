@@ -13,7 +13,6 @@ app.get('/', function(req, res) {
         document.getElementById("audioPlayer").src = "cancel.mp3";
     };
     
-    // another random function
     var foo2 = function() {
         document.getElementById("videoPlayer").src = "cancel.mp4";
     };
@@ -29,14 +28,16 @@ app.get('/', function(req, res) {
         res.write("<video id='videoPlayer' controls>");
         res.write("source src='" + videoFile +"' />");
         res.write("</video>");
-        res.write("<button onclick="+fns.foo()+">Click me</button>");
+        //buttons
+        res.write("<button id='videoCancel' onclick="+fns.foo()+">Click me</button>");
         
     } 
     if(audioFile){
         res.write("'<audio id='audioPlayer' controls>");
         res.write("<source src='" + audioFile+"' />");
         res.write("</audio>");
-        res.write("<button onclick="+fns.foo2()+">Click me</button>");
+        //buttons
+        res.write("<button id='audioCancel' onclick="+fns.foo2()+">Click me</button>");
     }
     if(posterImage){
         res.write("<img src='" + posterImage +"' id='posterImage'>");
