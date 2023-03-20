@@ -24,7 +24,7 @@ app.get('/', function(req, res) {
                 </audio>`);
     }
     if(posterImage){
-        res.send(`<img src="img_girl.jpg" id="posterImage">`);
+        res.send(`<img src="${posterImage}" id="posterImage">`);
     }
     
   });
