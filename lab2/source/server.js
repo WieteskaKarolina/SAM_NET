@@ -7,6 +7,8 @@ app.get('/', function(req, res) {
     const audioFile = req.query.audioFile;
     const posterImage = req.query.imgFile;
   
+    res.set("Content-Type", "text/html");
+    
     if (!videoFile && !audioFile && !posterImage) {
       res.send('Please provide a video or audio file.');
     } 
