@@ -57,10 +57,25 @@ app.get('/', function(req, res) {
     res.write("<th>Type</th></tr>");
     res.write("</table>");
 
-
     
-  });
+    res.write("<button onclick='addRow()'>Create row</button>");
+    res.write("<button onclick='deleteRow()'>Delete row</button>");
 
+    res.write("<script>");
+    res.write("function addRow() {");
+    res.write("var table = document.getElementById('playlist_table');");
+    res.write("var row = table.insertRow();");
+    res.write("var cell1 = row.insertCell(0);");
+    res.write("var cell2 = row.insertCell(1);");
+    res.write("var cell3 = row.insertCell(2);");
+    res.write("cell1.innerHTML = table.rows.length-1;");
+    res.write("cell2.innerHTML = 'NEW CELL1';");
+    res.write("cell3.innerHTML = 'NEW CELL3';");
+    res.write("function deleteRow() {");
+    res.write("document.getElementById('myTable').deleteRow(0);}");
+    res.write("</script>");
+
+});
 
 
 app.listen(4080)
