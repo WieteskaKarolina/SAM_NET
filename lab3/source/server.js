@@ -32,7 +32,8 @@ app.get('/', function(req, res) {
         res.write("<br/>");
         res.write("<br/>");
         res.write("<script>function foo1(){ document.getElementById('videoPlayer').src = 'cancel.mp4';}</script>");
-        res.write("<button id='videoCancel' onclick='foo1()'>Click me</button>");
+        res.write("<button id='videoCancel' onclick='foo1()'>Cancel</button>");
+        res.write("<button id='videoAdd' onclick='addRow('Video', '" + videoFile +"')'>Add video</button>");
         
     } 
     if(audioFile){
@@ -43,15 +44,17 @@ app.get('/', function(req, res) {
         res.write("<br/>");
         res.write("<br/>");
         res.write("<script>function foo(){ document.getElementById('audioPlayer').src = 'cancel.mp3';}</script>");
-        res.write("<button id='audioCancel' onclick='foo()'>Click me</button>");
+        res.write("<button id='audioCancel' onclick='foo()'>Cancel</button>");
+        res.write("<button id='audioAdd' onclick='addRow('Audio', '" + audioFile+"')'>Add audio</button>");
     }
     if(posterImage){
         res.write("<img src='" + posterImage +"' id='posterImage'>");
+        res.write("<button id='imgAdd' onclick='addRow('Image', '" + posterImage +"')'>Add image</button>");
     }
 
     res.write("<br/>");
     res.write("<br/>");
-    
+
     res.write("<style>");
     res.write("table, th, td {");
     res.write("  border:1px solid black;}");
@@ -67,18 +70,15 @@ app.get('/', function(req, res) {
     res.write("<button onclick='deleteRow()'>Delete row</button>");
 
     res.write("<script>");
-    res.write("function addRow() {");
+    res.write("function addRow(type, src) {");
     res.write("var table = document.getElementById('playlist_table');");
     res.write("var row = table.insertRow();");
     res.write("var cell1 = row.insertCell(0);");
     res.write("var cell2 = row.insertCell(1);");
     res.write("var cell3 = row.insertCell(2);");
     res.write("cell1.innerHTML = table.rows.length-1;");
-    res.write("cell2.innerHTML = 'NEW CELL1';");
-    res.write("cell3.innerHTML = 'NEW CELL3';");
-    res.write("function deleteRow() {");
-    res.write("document.getElementById('myTable').deleteRow(0);}");
-    res.write("</script>");
+    res.write("cell2.innerHTML = src;");
+    res.write("cell3.innerHTML = type;");
 
 });
 
