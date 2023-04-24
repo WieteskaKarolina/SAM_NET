@@ -73,6 +73,7 @@ app.get('/', function(req, res) {
     </table>`;
     
     res.write(tableBuild);
+    res.end();
 
 
 });
