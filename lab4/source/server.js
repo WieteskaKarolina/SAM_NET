@@ -2,6 +2,7 @@ const express = require('express');
 
 const app = express();
 
+
 app.get('/', function(req, res) {
     const videoFile = req.query.videoFile;
     const audioFile = req.query.audioFile;
@@ -15,6 +16,7 @@ app.get('/', function(req, res) {
                         </style>`;
 
     settingsBuild += `<script>
+                        let rowCounter = 1;
                         function addRow(type, src) {
                             var table = document.getElementById('playlist_table');
                             var row = table.insertRow();
@@ -22,11 +24,11 @@ app.get('/', function(req, res) {
                             var cell2 = row.insertCell(1);
                             var cell3 = row.insertCell(2);
                             var cell4 = row.insertCell(3);
-                            cell1.innerHTML = table.rows.length-1;
+                            cell1.innerHTML = rowCounter;
                             cell2.innerHTML = src;
                             cell3.innerHTML = type;
                             cell4.innerHTML = '<button class="removeRowButton" onclick="this.parentNode.parentNode.remove()">Delete</button>';
-
+                            rowCounter++;
                         }
                     </script>`;
     res.write(settingsBuild);
