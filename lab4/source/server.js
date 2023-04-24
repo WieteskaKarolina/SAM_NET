@@ -21,12 +21,14 @@ app.get('/', function(req, res) {
                             var cell1 = row.insertCell(0);
                             var cell2 = row.insertCell(1);
                             var cell3 = row.insertCell(2);
+                            var cell4 = row.insertCell(3);
                             cell1.innerHTML = table.rows.length-1;
                             cell2.innerHTML = src;
                             cell3.innerHTML = type;
+                            cell4.innerHTML = '<button class="removeRowButton" onclick="this.parentNode.parentNode.remove()">Delete</button>';
+
                         }
                     </script>`;
-
     res.write(settingsBuild);
 
     if (!videoFile && !audioFile && !posterImage) {
@@ -69,6 +71,7 @@ app.get('/', function(req, res) {
             <th>No.</th>
             <th>URL</th>
             <th>Type</th>
+            <th>Action</th>
         </tr>
     </table>`;
     
