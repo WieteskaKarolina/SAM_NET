@@ -16,6 +16,13 @@ app.get('/', function(req, res) {
                         </style>`;
 
     settingsBuild += `<script>
+                        function fun(){
+                            var table = document.getElementById('playlist_table');
+                            for (var i = 1; i < table.rows.length; i++) {
+                                var rowNumberCell = table.rows[i].cells[0];
+                                rowNumberCell.innerText = i;
+                            }
+                        }
                         let rowCounter = 1;
                         function addRow(type, src) {
                             var table = document.getElementById('playlist_table');
@@ -24,11 +31,14 @@ app.get('/', function(req, res) {
                             var cell2 = row.insertCell(1);
                             var cell3 = row.insertCell(2);
                             var cell4 = row.insertCell(3);
-                            cell1.innerHTML = rowCounter;
                             cell2.innerHTML = src;
                             cell3.innerHTML = type;
-                            cell4.innerHTML = '<button class="removeRowButton" onclick="this.parentNode.parentNode.remove()">Delete</button>';
-                            rowCounter++;
+                            cell4.innerHTML = '<button class="removeRowButton" onclick="this.parentNode.parentNode.remove(); fun();">Delete</button>';
+                        
+                            for (var i = 1; i < table.rows.length; i++) {
+                                var rowNumberCell = table.rows[i].cells[0];
+                                rowNumberCell.innerText = i;
+                            }
                         }
                     </script>`;
     res.write(settingsBuild);
