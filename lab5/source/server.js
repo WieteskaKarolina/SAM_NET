@@ -39,14 +39,17 @@ app.get('/', function(req, res) {
                         }
                         
                         function moveRowDown(row) {
-                            var sibling = row.nextElementSibling;
-                            var parent = row.parentNode;
-                            var newElement = parent.insertBefore(sibling, row);
-                            if (newElement.rowIndex === table.rows.length - 1) {
-                                    sibling = newElement.nextElementSibling;
-                                    parent = newElement.parentNode;
-                                    parent.insertBefore(sibling, newElement);
-                                }
+                            if(row.rowIndex === row.parentNode.rows.length - 1){
+                                sibling = row.parentNode.rows[1]
+                                parent = row.parentNode;
+                                parent.insertBefore(row, sibling);
+                            }
+                            else {
+                                sibling = row.nextElementSibling;
+                                parent = row.parentNode;
+                                parent.insertBefore(sibling, row);
+                            }
+                            
                         }
 
                         function addRow(type, src) {
