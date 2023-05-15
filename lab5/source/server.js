@@ -23,22 +23,7 @@ app.get('/', function(req, res) {
                                 rowNumberCell.innerText = i;
                             }
                         }
-                        function addRow(type, src) {
-                            var table = document.getElementById('playlist_table');
-                            var row = table.insertRow();
-                            var cell1 = row.insertCell(0);
-                            var cell2 = row.insertCell(1);
-                            var cell3 = row.insertCell(2);
-                            var cell4 = row.insertCell(3);
-                            cell2.innerHTML = src;
-                            cell3.innerHTML = type;
-                            cell4.innerHTML = '<button class="removeRowButton" onclick="this.parentNode.parentNode.remove(); updateRowNumber();">Delete</button>' +
-                                              '<button class="moveRowUpButton" onclick="moveRowUp(this.parentNode.parentNode)">Up</button>' +
-                                              '<button class="moveRowDownButton" onclick="moveRowDown(this.parentNode.parentNode)">Down</button>';
-                            
-                            updateRowNumber();
-                        }
-                        
+
                         function moveRowUp(row) {
                             var table = document.getElementById('playlist_table');
                             var index = row.rowIndex;
@@ -58,6 +43,24 @@ app.get('/', function(req, res) {
                                 updateRowNumber();
                             }
                         }
+
+                        function addRow(type, src) {
+                            var table = document.getElementById('playlist_table');
+                            var row = table.insertRow();
+                            var cell1 = row.insertCell(0);
+                            var cell2 = row.insertCell(1);
+                            var cell3 = row.insertCell(2);
+                            var cell4 = row.insertCell(3);
+                            cell2.innerHTML = src;
+                            cell3.innerHTML = type;
+                            cell4.innerHTML = '<button class="removeRowButton" onclick="this.parentNode.parentNode.remove(); updateRowNumber();">Delete</button>' +
+                                              '<button class="moveRowUpButton" onclick="moveRowUp(this.parentNode.parentNode); updateRowNumber();">Up</button>' +
+                                              '<button class="moveRowDownButton" onclick="moveRowDown(this.parentNode.parentNode); updateRowNumber();">Down</button>';
+                            
+                            updateRowNumber();
+                        }
+                        
+                      
                         
                         function cancelMedia(mediaType) {
                             let elementId;
@@ -71,10 +74,6 @@ app.get('/', function(req, res) {
                                     elementId = 'audioPlayer';
                                     cancelSrc = 'cancel.mp3';
                                     break;
-                                case 'image':
-                                    elementId = 'posterImage';
-                                    cancelSrc = 'cancel.jpg';
-                                    break;
                                 default:
                                     return;
                             }
@@ -87,7 +86,7 @@ app.get('/', function(req, res) {
                     </script>`;
     res.write(settingsBuild);
 
-    if (!videoFile && !audioFile && !posterImage) {
+    if (!videoFile && !audioFile && !imgFile) {
         res.write("Please provide a video or audio file.");
     } 
     
@@ -106,7 +105,6 @@ app.get('/', function(req, res) {
     }
     if(imgFile){
         let posterImageBuild =`<img id='posterImage' src= ${imgFile} > <br></br>`;
-        posterImageBuild += `<button id='imgCancel' onclick='cancelMedia("image")'>Cancel image</button>`;
         posterImageBuild += `<button id='imgAdd' onclick='addRow("Image", document.getElementById("posterImage").src)'>Add image</button> <br></br>`;
         res.write(posterImageBuild);
     }
