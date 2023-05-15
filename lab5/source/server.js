@@ -25,22 +25,24 @@ app.get('/', function(req, res) {
                         }
 
                         function moveRowUp(row) {
-                            var table = document.getElementById('playlist_table');
-                            var index = row.rowIndex;
-                            if (index > 1) {
-                                table.deleteRow(index);
-                                table.insertBefore(row, table.rows[index - 1]);
-                                updateRowNumber();
+                            var sibling = row.previousElementSibling;
+                            var parent = row.parentNode;
+                            var newElement = parent.insertBefore(row, sibling);
+                            if(newEl.rowIndex === 0){
+                                sibling = newElement.previousElementSibling;
+                                parent = newElement.parentNode;
+                                parent.insertBefore(newElement, sibling);
                             }
                         }
                         
                         function moveRowDown(row) {
-                            var table = document.getElementById('playlist_table');
-                            var index = row.rowIndex;
-                            if (index < table.rows.length - 1) {
-                                table.deleteRow(index);
-                                table.insertBefore(row, table.rows[index + 1].nextSibling);
-                                updateRowNumber();
+                            var sibling = row.nextElementSibling;
+                            var parent = row.parentNode;
+                            var newElement = parent.insertBefore(sibling, row);
+                            if(index < table.rows.length - 1){
+                                sibling = newElement.nextElementSibling;
+                                parent = newElement.parentNode;
+                                parent.insertBefore(sibling, newElement);
                             }
                         }
 
