@@ -16,11 +16,14 @@ app.get('/', function(req, res) {
                         </style>`;
 
     settingsBuild += `<script>
-                        function updateRowNumber(){
+                        function updateRowNumber() {
                             var table = document.getElementById('playlist_table');
-                            for (var i = 1; i < table.rows.length; i++) {
-                                var rowNumberCell = table.rows[i].cells[0];
-                                rowNumberCell.innerText = i;
+                            var rows = table.rows;
+                        
+                            for (var i = 1; i < rows.length; i++) {
+                                var row = rows[i];
+                                var numberCell = row.cells[0];
+                                numberCell.textContent = i;
                             }
                         }
 
@@ -28,22 +31,22 @@ app.get('/', function(req, res) {
                             var sibling = row.previousElementSibling;
                             var parent = row.parentNode;
                             var newElement = parent.insertBefore(row, sibling);
-                            if(newEl.rowIndex === 0){
-                                sibling = newElement.previousElementSibling;
-                                parent = newElement.parentNode;
-                                parent.insertBefore(newElement, sibling);
-                            }
+                            if (newElement.rowIndex === 0) {
+                                    sibling = newElement.previousElementSibling;
+                                    parent = newElement.parentNode;
+                                    parent.insertBefore(newElement, sibling);
+                                }
                         }
                         
                         function moveRowDown(row) {
                             var sibling = row.nextElementSibling;
                             var parent = row.parentNode;
                             var newElement = parent.insertBefore(sibling, row);
-                            if(index < table.rows.length - 1){
-                                sibling = newElement.nextElementSibling;
-                                parent = newElement.parentNode;
-                                parent.insertBefore(sibling, newElement);
-                            }
+                            if (newElement.rowIndex === table.rows.length - 1) {
+                                    sibling = newElement.nextElementSibling;
+                                    parent = newElement.parentNode;
+                                    parent.insertBefore(sibling, newElement);
+                                }
                         }
 
                         function addRow(type, src) {
@@ -55,14 +58,14 @@ app.get('/', function(req, res) {
                             var cell4 = row.insertCell(3);
                             cell2.innerHTML = src;
                             cell3.innerHTML = type;
-                            cell4.innerHTML = '<button class="removeRowButton" onclick="this.parentNode.parentNode.remove(); updateRowNumber();">Delete</button>' +
-                                              '<button class="moveRowUpButton" onclick="moveRowUp(this.parentNode.parentNode); updateRowNumber();">Up</button>' +
-                                              '<button class="moveRowDownButton" onclick="moveRowDown(this.parentNode.parentNode); updateRowNumber();">Down</button>';
+                            cell4.innerHTML =
+                                '<button class="removeRowButton" onclick="this.parentNode.parentNode.remove(); updateRowNumber();">Delete</button>' +
+                                '<button class="moveRowUpButton" onclick="moveRowUp(this.parentNode.parentNode); updateRowNumber();">Up</button>' +
+                                '<button class="moveRowDownButton" onclick="moveRowDown(this.parentNode.parentNode); updateRowNumber();">Down</button>';
                             
                             updateRowNumber();
                         }
-                        
-                      
+                          
                         
                         function cancelMedia(mediaType) {
                             let elementId;
