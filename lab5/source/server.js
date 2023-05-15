@@ -23,7 +23,6 @@ app.get('/', function(req, res) {
                                 rowNumberCell.innerText = i;
                             }
                         }
-                        let rowCounter = 1;
                         function addRow(type, src) {
                             var table = document.getElementById('playlist_table');
                             var row = table.insertRow();
@@ -33,11 +32,33 @@ app.get('/', function(req, res) {
                             var cell4 = row.insertCell(3);
                             cell2.innerHTML = src;
                             cell3.innerHTML = type;
-                            cell4.innerHTML = '<button class="removeRowButton" onclick="this.parentNode.parentNode.remove(); updateRowNumber();">Delete</button>';
-                        
+                            cell4.innerHTML = '<button class="removeRowButton" onclick="this.parentNode.parentNode.remove(); updateRowNumber();">Delete</button>' +
+                                              '<button class="moveRowUpButton" onclick="moveRowUp(this.parentNode.parentNode)">Up</button>' +
+                                              '<button class="moveRowDownButton" onclick="moveRowDown(this.parentNode.parentNode)">Down</button>';
+                            
                             updateRowNumber();
                         }
-
+                        
+                        function moveRowUp(row) {
+                            var table = document.getElementById('playlist_table');
+                            var index = row.rowIndex;
+                            if (index > 1) {
+                                table.deleteRow(index);
+                                table.insertBefore(row, table.rows[index - 1]);
+                                updateRowNumber();
+                            }
+                        }
+                        
+                        function moveRowDown(row) {
+                            var table = document.getElementById('playlist_table');
+                            var index = row.rowIndex;
+                            if (index < table.rows.length - 1) {
+                                table.deleteRow(index);
+                                table.insertBefore(row, table.rows[index + 1].nextSibling);
+                                updateRowNumber();
+                            }
+                        }
+                        
                         function cancelMedia(mediaType) {
                             let elementId;
                             let cancelSrc;
