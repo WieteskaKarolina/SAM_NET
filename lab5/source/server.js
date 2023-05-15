@@ -6,7 +6,7 @@ const app = express();
 app.get('/', function(req, res) {
     const videoFile = req.query.videoFile;
     const audioFile = req.query.audioFile;
-    const posterImage = req.query.imgFile;
+    const imgFile = req.query.imgFile;
   
     res.set("Content-Type", "text/html");
     
@@ -16,7 +16,7 @@ app.get('/', function(req, res) {
                         </style>`;
 
     settingsBuild += `<script>
-                        function fun(){
+                        function updateRowNumber(){
                             var table = document.getElementById('playlist_table');
                             for (var i = 1; i < table.rows.length; i++) {
                                 var rowNumberCell = table.rows[i].cells[0];
@@ -33,13 +33,36 @@ app.get('/', function(req, res) {
                             var cell4 = row.insertCell(3);
                             cell2.innerHTML = src;
                             cell3.innerHTML = type;
-                            cell4.innerHTML = '<button class="removeRowButton" onclick="this.parentNode.parentNode.remove(); fun();">Delete</button>';
+                            cell4.innerHTML = '<button class="removeRowButton" onclick="this.parentNode.parentNode.remove(); updateRowNumber();">Delete</button>';
                         
-                            for (var i = 1; i < table.rows.length; i++) {
-                                var rowNumberCell = table.rows[i].cells[0];
-                                rowNumberCell.innerText = i;
+                            updateRowNumber();
+                        }
+
+                        function cancelMedia(mediaType) {
+                            let elementId;
+                            let cancelSrc;
+                            switch (mediaType) {
+                                case 'video':
+                                    elementId = 'videoPlayer';
+                                    cancelSrc = 'cancel.mp4';
+                                    break;
+                                case 'audio':
+                                    elementId = 'audioPlayer';
+                                    cancelSrc = 'cancel.mp3';
+                                    break;
+                                case 'image':
+                                    elementId = 'posterImage';
+                                    cancelSrc = 'cancel.jpg';
+                                    break;
+                                default:
+                                    return;
+                            }
+                            const mediaElement = document.getElementById(elementId);
+                            if (mediaElement) {
+                                mediaElement.src = cancelSrc;
                             }
                         }
+                        
                     </script>`;
     res.write(settingsBuild);
 
@@ -48,31 +71,22 @@ app.get('/', function(req, res) {
     } 
     
     if(videoFile){
-        let videoBuild = `<video id='videoPlayer' controls source src= ${videoFile}></video> <br></br>`;
-        videoBuild += ` <script>
-                            function cancelVideo(){ 
-                                document.getElementById('videoPlayer').src = 'cancel.mp4';
-                            }
-                        </script>`;
-        videoBuild +=  `<button id='videoCancel' onclick='cancelVideo()'>Cancel video</button>`;
-        videoBuild +=  `<button id='videoAdd' onclick='addRow("Video", "${videoFile}")'>Add video</button> <br></br>`;
+        let videoBuild = `<video id='videoPlayer' controls src= ${videoFile}></video> <br></br>`;
+        videoBuild +=  `<button id='videoCancel' onclick='cancelMedia("video")'>Cancel video</button>`;
+        videoBuild +=  `<button id='videoAdd' onclick='addRow("Video", document.getElementById("videoPlayer").src)'>Add video</button> <br></br>`;
         res.write(videoBuild);
     } 
 
     if(audioFile){
-        let audioBuild =  `<audio id='audioPlayer' controls source src= ${audioFile} ></audio> <br></br>`;
-        audioBuild += `<script>
-                            function cancelAudio(){ 
-                                document.getElementById('audioPlayer').src = 'cancel.mp3';
-                            }
-                        </script>`;
-        audioBuild += `<button id='audioCancel' onclick='cancelAudio()'>Cancel audio</button>`;
-        audioBuild += `<button id='audioAdd' onclick='addRow("Audio", "${audioFile}")'>Add audio</button> <br></br>`;
+        let audioBuild =  `<audio id='audioPlayer' controls src= ${audioFile} ></audio> <br></br>`;
+        audioBuild += `<button id='audioCancel' onclick='cancelMedia("audio")'>Cancel audio</button>`;
+        audioBuild += `<button id='audioAdd' onclick='addRow("Audio", document.getElementById("audioPlayer").src)'>Add audio</button> <br></br>`;
         res.write(audioBuild);
     }
-    if(posterImage){
-        let posterImageBuild =`<img src= ${posterImage} id='posterImage'> <br></br>`;
-        posterImageBuild += `<button id='imgAdd' onclick='addRow("Image", "${posterImage}")'>Add image</button> <br></br>`;
+    if(imgFile){
+        let posterImageBuild =`<img id='posterImage' src= ${imgFile} > <br></br>`;
+        posterImageBuild += `<button id='imgCancel' onclick='cancelMedia("image")'>Cancel image</button>`;
+        posterImageBuild += `<button id='imgAdd' onclick='addRow("Image", document.getElementById("posterImage").src)'>Add image</button> <br></br>`;
         res.write(posterImageBuild);
     }
 
