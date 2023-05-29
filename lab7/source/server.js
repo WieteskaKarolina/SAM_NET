@@ -122,19 +122,19 @@ app.get('/', function(req, res) {
     
     if(videoFile){
         let videoBuild = `<video id='videoPlayer' controls src= ${videoFile}></video> <br></br>`;
+        videoBuild += `<button id='videoPlay' onclick="playVideo()" type="button">Play Video</button>
+        <button id='videoPause' onclick="pauseVideo()" type="button">Pause Video</button><br></br> `;
         videoBuild +=  `<button id='videoCancel' onclick='cancelMedia("video")'>Cancel video</button>`;
         videoBuild +=  `<button id='videoAdd' onclick='addRow("Video", document.getElementById("videoPlayer").src)'>Add video</button> <br>`;
-        videoBuild += `<button id='videoPlay' onclick="playVideo()" type="button">Play Video</button>
-                        <button id='videoPause' onclick="pauseVideo()" type="button">Pause Video</button><br></br> `;
         res.write(videoBuild);
     } 
 
     if(audioFile){
         let audioBuild =  `<audio id='audioPlayer' controls src= ${audioFile} ></audio> <br></br>`;
+        audioBuild += `<button id='audioPlay' onclick="playAudio()" type="button">Play Audio</button>
+        <button id='audioPause' onclick="pauseAudio()" type="button">Pause Audio</button><br></br> `;
         audioBuild += `<button id='audioCancel' onclick='cancelMedia("audio")'>Cancel audio</button>`;
         audioBuild += `<button id='audioAdd' onclick='addRow("Audio", document.getElementById("audioPlayer").src)'>Add audio</button> <br>`;
-        audioBuild += `<button id='audioPlay' onclick="playAudio()" type="button">Play Audio</button>
-                        <button id='audioPause' onclick="pauseAudio()" type="button">Pause Audio</button><br></br> `;
         res.write(audioBuild);
     }
     if(imgFile){
