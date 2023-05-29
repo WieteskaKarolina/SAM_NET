@@ -101,6 +101,16 @@ app.get('/', function(req, res) {
                             video.pause(); 
                         } 
                         
+                        let audio = document.getElementById("audioPlayer"); 
+
+                        function playAudio() { 
+                            audio.play(); 
+                        } 
+
+                        function pauseAudio() { 
+                            audio.pause(); 
+                        } 
+
                     </script>`;
     res.write(settingsBuild);
 
@@ -121,6 +131,8 @@ app.get('/', function(req, res) {
         let audioBuild =  `<audio id='audioPlayer' controls src= ${audioFile} ></audio> <br></br>`;
         audioBuild += `<button id='audioCancel' onclick='cancelMedia("audio")'>Cancel audio</button>`;
         audioBuild += `<button id='audioAdd' onclick='addRow("Audio", document.getElementById("audioPlayer").src)'>Add audio</button> <br></br>`;
+        audioBuild += `<button id='audioPlay' onclick="playAudio()" type="button">Play Audio</button>
+                        <button id='audioPause' onclick="pauseAudio()" type="button">Pause Audio</button><br> `;
         res.write(audioBuild);
     }
     if(imgFile){
