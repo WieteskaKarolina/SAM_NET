@@ -90,6 +90,16 @@ app.get('/', function(req, res) {
                                 mediaElement.src = cancelSrc;
                             }
                         }
+
+                        let video = document.getElementById("videoPlayer"); 
+
+                        function playVideo() { 
+                            video.play(); 
+                        } 
+
+                        function pauseVideo() { 
+                            video.pause(); 
+                        } 
                         
                     </script>`;
     res.write(settingsBuild);
@@ -102,6 +112,8 @@ app.get('/', function(req, res) {
         let videoBuild = `<video id='videoPlayer' controls src= ${videoFile}></video> <br></br>`;
         videoBuild +=  `<button id='videoCancel' onclick='cancelMedia("video")'>Cancel video</button>`;
         videoBuild +=  `<button id='videoAdd' onclick='addRow("Video", document.getElementById("videoPlayer").src)'>Add video</button> <br></br>`;
+        videoBuild += `<button id='videoPlay' onclick="playVideo()" type="button">Play Video</button>
+                        <button id='videoPause' onclick="pauseVideo()" type="button">Pause Video</button><br> `;
         res.write(videoBuild);
     } 
 
