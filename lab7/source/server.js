@@ -91,23 +91,25 @@ app.get('/', function(req, res) {
                             }
                         }
 
-                        let video = document.getElementById("videoPlayer"); 
 
                         function playVideo() { 
+                            let video = document.getElementById("videoPlayer");
                             video.play(); 
                         } 
 
                         function pauseVideo() { 
+                            let video = document.getElementById("videoPlayer");
                             video.pause(); 
                         } 
                         
-                        let audio = document.getElementById("audioPlayer"); 
 
                         function playAudio() { 
+                            let audio = document.getElementById("audioPlayer"); 
                             audio.play(); 
                         } 
 
                         function pauseAudio() { 
+                            let audio = document.getElementById("audioPlayer"); 
                             audio.pause(); 
                         } 
 
